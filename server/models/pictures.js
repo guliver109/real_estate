@@ -1,8 +1,6 @@
-const {Schema, model} = require('mongoose'),
+// const { Schema, model } = require('mongoose');
 
-picturesSchema = new Schema({
-    
-    
+//     picturesSchema = new Schema({}, {strict: false});
 
-});
-module.exports = model('Pictures', picturesSchema)
+
+// module.exports = model('Pictures', picturesSchema)
