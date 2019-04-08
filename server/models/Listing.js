@@ -18,10 +18,7 @@ const { Schema, model } = require('mongoose');
         full_description: { type: String, /* required: true */ },
         short_description: { type: String, /* required: true */ },
         price: { type: Number, /* required: true */ },
-        pictures: [{
-            type:Schema.ObjectId,
-            ref:'Pictures'
-        }],
+        pictures: [String],
         user: {
             type: Schema.ObjectId,
             ref: 'User'

@@ -3,18 +3,19 @@ const   Listing = require('../models/Listing'),
         Gridfs = require('gridfs-stream'),
         fs = require('fs');
         
+var {log} = console;
 
 function create(req, res) {
-    console.log(req.session, "session from create listing");
-    console.log(req.body, "body create listing");
-    console.log(req.files, "file from create lising")
+    log(req.session, "session from create listing");
+    log(req.body, "body create listing");
+    log(req.files, "file from create lising")
 
     if (req.session.user) {
         let payload = {...req.body};
         payload.user = req.session.user._id;
-        console.log(payload);
-        Listing.create(payload).then(result => {
-             console.log(result, "from listing create")
+        log(payload);
+        Listing.create(payload).then(listing => {
+             log(listing, "from listing create")
             let db = mongoose.connection.db,
                 mongoDriver = mongoose.mongo,
                 gfs = new Gridfs(db, mongoDriver),
@@ -24,15 +25,19 @@ function create(req, res) {
                 content_type: req.files['image-file'].mimetype,
                 metadata: req.body
             });
-            // console.log(writestream, "+++++++++++++++++++++++++++++++++++++")
-            // console.log(req.body, 'PPppppppppppppppppppppppppppppppppp')
-            // // console.log(req.body,image, '(PPppppppppppppppppppppppppppppppppp)')
-            // console.log(req.body.image.path, "//////////////////////////")
+            // log(writestream, "+++++++++++++++++++++++++++++++++++++")
+            // log(req.body, 'PPppppppppppppppppppppppppppppppppp')
+            // // log(req.body,image, '(PPppppppppppppppppppppppppppppppppp)')
+            // log(req.body.image.path, "//////////////////////////")
+            console.log('req.files LLLLLLLLLLLLLLL',req.files)
             fs.createReadStream(req.files['image-file'].path).pipe(writestream);
+            listing.pictures.push(req.files['image-file'].path);
+            console.log('LISTING', listing);
+            listing.save();
             writestream.on('close', function(body) {
-                console.log(body, "-----------------------------------------");
+                log(body, "-----------------------------------------");
             })
-            res.send(result);
+            res.send(listing);
         }).catch(err => {
             if (err) throw err;
         })
@@ -41,10 +46,19 @@ function create(req, res) {
     }
 }
 
+function getImage({params: {_id}}, res){
+    log(_id);
+    let db = mongoose.connection.db;
+    let mongoDriver = mongoose.mongo;
+    let gfs = new Gridfs(db, mongoDriver);
+    let readstream = gfs.createReadStream({_id});
+    readstream.pipe(res);
+}
+
 function getAll(req, res) {
-    console.log('hit getAll function');
+    log('hit getAll function');
     Listing.find().populate('user').then(result => {
-        console.log(result, "getAll result")
+        log(result, "getAll result")
         let listings = result.map(listing => {
             listing = listing.toObject();
             let copy = {...listing}
@@ -65,7 +79,7 @@ function updateOne(req, res) {
         req.body.id,
         { $set: req.body.updatedFields },
         { new: true }).then(result => {
-            console.log(result, "update one");
+            log(result, "update one");
         }).catch((err, doc) => {
             res.send({error: err, affected: doc });
         })
@@ -85,6 +99,7 @@ module.exports = {
     create,
     getAll,
     updateOne,
+    getImage,
     deleteOne
 }
 
