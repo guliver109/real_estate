@@ -135,7 +135,6 @@ class PrimarySearchAppBar extends React.Component {
         const { classes } = this.props;
         const isMenuOpen = Boolean(anchorEl);
         const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-        // console.log(this.props, "props from")
 
         const renderMenu = (
             <Menu

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+// import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import SaveIcon from '@material-ui/icons/Save';
 import NumberFormat from 'react-number-format';
 import Typography from '@material-ui/core/Typography';
@@ -14,9 +14,11 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+// import RaisedButton from '@material-ui/core/RaisedButton';
 
 import axios from 'axios';
-import styles from '../CreateListingForm/CreateListingFormStyle'
+import styles from '../CreateListingForm/CreateListingFormStyle';
+// import PictureUpload from '../PictureUpload';
 
 // function CellPhoneCustom(props) {
 //     const { inputRef, ...other } = props;
@@ -106,23 +108,47 @@ class CreateListingForm extends React.Component {
         // numberformat: ' ',
         // street: '',
         // street_number: '',
+        file: null
     };
 
     handleChange = name => event => {
-        this.setState({
-            [name]: event.target.value,
-        }, () => {
-            console.log(this.state);
-        });
+        if (event.target.files){ 
+            this.setState({
+                [name]: event.target.value,
+                file: event.target.files[0]
+            }, () => {
+                console.log(this.state);
+            });
+        } else {
+            this.setState({
+                [name]: event.target.value,  
+            }, () => {
+                console.log(this.state)
+            })
+        }
     };
 
-    handleSubmit = () => {
-        axios.post('/listings', this.state).then(res => {
+    handleSubmit = (e) => {
+        e.preventDefault();
+        let formData = new FormData();
+        let file = document.getElementById('image-file').files[0];
+        console.log(file);
+        formData.append('image-file', file);
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        };
+        // this.setState({ image: file }, () => {
+        axios.post('/listings', formData, config).then(res => {
             console.log(res);
+            alert("The file is successfuly uploaded");
         }).catch(err => {
             if (err) throw err;
         })
+    // });
     }
+
 
     render() {
         const { classes } = this.props;
@@ -184,14 +210,14 @@ class CreateListingForm extends React.Component {
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
-                                <TextField 
-                                    id="state" 
-                                    name="state" 
-                                    label="State/Province/Region" 
+                                <TextField
+                                    id="state"
+                                    name="state"
+                                    label="State/Province/Region"
                                     fullWidth
                                     value={this.state.state}
                                     onChange={this.handleChange('state')}
-                                    />
+                                />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
@@ -383,43 +409,57 @@ class CreateListingForm extends React.Component {
                         </Grid>
                         <br></br>
                         <br></br>
+                        {/* <PictureUpload></PictureUpload> */}
                         <Typography variant="h6" gutterBottom>
                             Upload Property Pictures
                         </Typography>
-                        <input
-                            accept="image/*"
-                            className={classes.input}
-                            id="contained-button-file"
-                            multiple
-                            type="file"
-                        />
-                        <label htmlFor="contained-button-file">
-                            <Button variant="contained" color="default" className={classes.button}>
-                                Upload
-                                <CloudUploadIcon className={classes.rightIcon} />
+                        {/* <PictureUpload></PictureUpload> */}
+                        <form onSubmit={this.handleSubmit}>
+                            <label htmlFor="image-file">
+                            <Button>
+                                <input
+                                    accept="image/*"
+                                    className={classes.input}
+                                    id="image-file"
+                                    multiple
+                                    type="file"
+                                    name="image-file"
+                                    // onChange={this.onChange}
+                                />
+
                             </Button>
+                            {/* <label htmlFor="text-button-file">
+                                <Button component="span" className={classes.button} onClick={this.handlePictureFile}>
+                                Upload
+                                </Button>
+                            </label>
+                            {/* <h1>File Upload</h1>
+                            // // <input type="file" name="myImage" onChange={this.onChange} />
+                            <button type="submit">Upload</button> */}
+
                             <Button variant="contained" color="secondary" className={classes.button}>
                                 Delete
                                 <DeleteIcon className={classes.rightIcon} />
-                            </Button>
+                            </Button> */}
                         </label>
+                        </form>
                         <br></br>
                         <br></br>
                         <React.Fragment>
-                            <Button 
-                                    size="large"
-                                    variant="contained"
-                                    color="primary" 
-                                    className={classes.button} 
-                                    // callback={this.handleSubmit}
-                                    // onClick={props.callback}
-                                    onClick={this.handleSubmit}>
-                                <SaveIcon 
-                                    className={classNames(classes.leftIcon, classes.iconSmall)} 
+                            <Button
+                                size="large"
+                                variant="contained"
+                                color="primary"
+                                className={classes.button}
+                                // callback={this.handleSubmit}
+                                // onClick={props.callback}
+                                onClick={this.handleSubmit}>
+                                <SaveIcon
+                                    className={classNames(classes.leftIcon, classes.iconSmall)}
                                 />
                                 Save
                             </Button>
-                        {/* <Button
+                            {/* <Button
                             variant="contained"
                             color="primary"
                             className={classes.button}
