@@ -58,6 +58,7 @@ class LoginPage extends Component {
 
     return (
       <main className={classes.main}>
+      {/* <img src="/uploads/273e42c2781df2372d660e0e696aa6e8"/> */}
         <Navbar {...this.props} />
         <CssBaseline />
         <Paper className={classes.paper}>

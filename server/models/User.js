@@ -17,11 +17,9 @@ const   {Schema, model} = require('mongoose'),
     });
     
     userSchema.pre('save', function(next) {
-        console.log("hello");
         let user = this;
         if(!user.isModified('password')) return next();
         bcrypt.genSalt(SALT, function(err, salt){
-            console.log(user.password)
             if (err) return next(err);
             bcrypt.hash(user.password, salt, (err, hash) => {
                 if (err) return next(err);

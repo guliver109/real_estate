@@ -131,9 +131,9 @@ class CreateListingForm extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         let formData = new FormData();
-        let file = document.getElementById('image-file').files[0];
-        console.log(file);
-        formData.append('image-file', file);
+        for (let i = 0; i < document.getElementById('image-file').files.length; i++){
+            formData.append('image-file', document.getElementById('image-file').files[i]);
+        }
         const config = {
             headers: {
                 'Content-Type': 'multipart/form-data'

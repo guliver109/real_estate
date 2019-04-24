@@ -22,7 +22,7 @@ app.use(cookieParser());
 
 
 require('./config/session')(app);
-
+app.use('/uploads', express.static(path.join(__dirname + '/uploads')));
 
 app.use(userRoutes);
 app.use('/listings', listingRoutes); // prepending '/listing' to every listing routes
