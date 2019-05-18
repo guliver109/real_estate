@@ -4,10 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cd server && npm start",
-    "test": "echo \"Error: no test specified\" && exit 1"
-    // "kill-all": "kill-port 3000 3001 9229",
-    // "install-all": "npm i && cd server && npm i && cd ../client && npm i"
+    "start": "cd server && npm start"
   },
   "keywords": [],
   "author": "",
