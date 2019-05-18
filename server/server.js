@@ -27,9 +27,9 @@ app.use('/uploads', express.static(path.join(__dirname + '/uploads')));
 app.use(userRoutes);
 app.use('/listings', listingRoutes); // prepending '/listing' to every listing routes
 // app.use('/pictures', picturesRoutes);
-// app.get('/*', (req, res) => {
-//     res.sendFile(path.join(__dirname + './../client/build/index.html'))
-// })
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname + './../client/build/index.html'))
+})
 
 
 app.listen(PORT);

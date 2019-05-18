@@ -1,4 +1,6 @@
-require('mongoose').connect('mongodb://localhost:27017/real-estate', {
+require('dotenv').config();
+
+require('mongoose').connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useCreateIndex: true
 });
