@@ -20,7 +20,9 @@ app.use(cookieParser());
 // app.use(methodOverride());
 // app.use(bodyParser({keepExtensions:false,uploadDir:path.join(__dirname,'/files')}));
 
-
+app.get('/favicon.ico', (req, res, next) => {
+    next();
+})
 require('./config/session')(app);
 app.use('/uploads', express.static(path.join(__dirname + '/uploads')));
 
