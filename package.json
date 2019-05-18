@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm run kill-all && concurrently \"cd server && nodemon --inspect server\" \"cd client && yarn start\"",
+    "start": "node server/server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "kill-all": "kill-port 3000 3001 9229",
     "install-all": "npm i && cd server && npm i && cd ../client && npm i"
