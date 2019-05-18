@@ -7,6 +7,6 @@ module.exports = function (app) {
         secret: 'team_work',
         saveUninitialized: true,
         resave: true,
-        cookie: { secure: false }
+        cookie: { secure: true }
     }))
 }
