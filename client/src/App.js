@@ -6,6 +6,7 @@ import DashBoard from './pages/DashBoard';
 import axios from 'axios';
 import CreateListingPage from './pages/CreateListingPage/CreateListingPage';
 import ListingPage from './pages/ListingPage/ListingPage';
+import LandingPage from './pages/LandingPage/LandingPage';
 
 
 
@@ -39,7 +40,8 @@ export default class App extends Component {
         return (
             <Router>
                 <div>
-                    <Route exact path='/' render={props => <SignupPage user={this.state.user} {...props} />} />
+                    <Route exact path='/' render={props => <LandingPage user={this.state.user} {...props} />} /> 
+                    <Route exact path='/signup' render={props => <SignupPage user={this.state.user} {...props} />} />
                     <Route exact path='/login' render={props => <LoginPage {...props} checkForUserData={this.checkForUserData} />} />
                     <Route exact path='/dashboard' render={props => this.state.user ? <DashBoard {...props} user={this.state.user} /> : <LoginPage {...props} checkForUserData={this.checkForUserData} />} />
                     <Route exact path='/create' render={props => this.state.user ? <CreateListingPage {...props} user={this.state.user} /> : <LoginPage {...props} checkForUserData={this.checkForUserData} />} />

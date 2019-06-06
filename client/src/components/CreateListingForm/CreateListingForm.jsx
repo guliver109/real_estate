@@ -15,50 +15,11 @@ import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 // import RaisedButton from '@material-ui/core/RaisedButton';
+import Fab from '@material-ui/core/Fab';
 
 import axios from 'axios';
 import styles from '../CreateListingForm/CreateListingFormStyle';
 // import PictureUpload from '../PictureUpload';
-
-// function CellPhoneCustom(props) {
-//     const { inputRef, ...other } = props;
-
-//     return (
-//         <MaskedInput
-//             {...other}
-//             ref={ref => {
-//                 inputRef(ref ? ref.inputElement : null);
-//             }}
-//             mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-//             placeholderChar={'\u2000'}
-//             showMask
-//         />
-//     );
-// }
-
-// CellPhoneCustom.propTypes = {
-//     inputRef: PropTypes.func.isRequired,
-// };
-
-// function OfficePhoneCustom(props) {
-//     const { inputRef, ...other } = props;
-
-//     return (
-//         <MaskedInput
-//             {...other}
-//             ref={ref => {
-//                 inputRef(ref ? ref.inputElement : null);
-//             }}
-//             mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-//             placeholderChar={'\u2000'}
-//             showMask
-//         />
-//     );
-// }
-
-// OfficePhoneCustom.propTypes = {
-//     inputRef: PropTypes.func.isRequired,
-// };
 
 function NumberFormatCustom(props) {
     const { inputRef, onChange, ...other } = props;
@@ -86,7 +47,7 @@ NumberFormatCustom.propTypes = {
 };
 
 class CreateListingForm extends React.Component {
-    state = {
+    initialState = {
         address: '',
         city: '',
         state: '',
@@ -110,9 +71,10 @@ class CreateListingForm extends React.Component {
         // street_number: '',
         file: null
     };
+    state = this.initialState;
 
     handleChange = name => event => {
-        if (event.target.files){ 
+        if (event.target.files) {
             this.setState({
                 [name]: event.target.value,
                 file: event.target.files[0]
@@ -121,7 +83,7 @@ class CreateListingForm extends React.Component {
             });
         } else {
             this.setState({
-                [name]: event.target.value,  
+                [name]: event.target.value,
             }, () => {
                 console.log(this.state)
             })
@@ -131,7 +93,7 @@ class CreateListingForm extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         let formData = new FormData();
-        for (let i = 0; i < document.getElementById('image-file').files.length; i++){
+        for (let i = 0; i < document.getElementById('image-file').files.length; i++) {
             formData.append('image-file', document.getElementById('image-file').files[i]);
         }
         const config = {
@@ -139,16 +101,22 @@ class CreateListingForm extends React.Component {
                 'Content-Type': 'multipart/form-data'
             }
         };
-        // this.setState({ image: file }, () => {
         axios.post('/listings', formData, config).then(res => {
             console.log(res);
-            alert("The file is successfuly uploaded");
+            this.props.history.push('/listings');
         }).catch(err => {
             if (err) throw err;
         })
-    // });
+    }
+    handleLeaveFrom = (e) => {
+        e.preventDefault();
+        this.props.history.push('/listings');
     }
 
+    handleResetForm = (e) => {
+        e.preventDefault();
+        this.setState(this.initialState);
+    }
 
     render() {
         const { classes } = this.props;
@@ -165,12 +133,28 @@ class CreateListingForm extends React.Component {
                 </AppBar>
                 <main className={classes.layout}>
                     <Paper className={classes.paper}>
-                        <Typography component="h1" variant="h4" align="center">
-                            Listing Upload Form
-                        </Typography>
+                        <div className={classes.root}>
+                            <Grid container spacing={0}>
+                                <Grid item xs={7}>
+                                    <Typography component="h1" variant="h5" align="left">
+                                        Listing Upload Form
+                                </Typography>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Button color="secondary" onClick={this.handleResetForm} className={classes.button}>
+                                        Clear Form
+                                    </Button>
+                                </Grid>
+                                <Grid item xs={2} align="right">
+                                        <Fab aria-label="Delete" onClick={this.handleLeaveFrom} size="medium" className={classes.fab}>
+                                            <DeleteIcon />
+                                        </Fab>
+                                </Grid>
+                            </Grid>
+                        </div>
                         <br></br>
                         <br></br>
-                        <Typography variant="h6" gutterBottom>
+                        <Typography variant="h6" gutterTop>
                             Listing address
                         </Typography>
                         <Grid container spacing={24}>
@@ -416,19 +400,19 @@ class CreateListingForm extends React.Component {
                         {/* <PictureUpload></PictureUpload> */}
                         <form onSubmit={this.handleSubmit}>
                             <label htmlFor="image-file">
-                            <Button>
-                                <input
-                                    accept="image/*"
-                                    className={classes.input}
-                                    id="image-file"
-                                    multiple
-                                    type="file"
-                                    name="image-file"
+                                <Button>
+                                    <input
+                                        accept="image/*"
+                                        className={classes.input}
+                                        id="image-file"
+                                        multiple
+                                        type="file"
+                                        name="image-file"
                                     // onChange={this.onChange}
-                                />
+                                    />
 
-                            </Button>
-                            {/* <label htmlFor="text-button-file">
+                                </Button>
+                                {/* <label htmlFor="text-button-file">
                                 <Button component="span" className={classes.button} onClick={this.handlePictureFile}>
                                 Upload
                                 </Button>
@@ -437,11 +421,11 @@ class CreateListingForm extends React.Component {
                             // // <input type="file" name="myImage" onChange={this.onChange} />
                             <button type="submit">Upload</button> */}
 
-                            <Button variant="contained" color="secondary" className={classes.button}>
-                                Delete
+                                <Button variant="contained" color="secondary" className={classes.button}>
+                                    Delete
                                 <DeleteIcon className={classes.rightIcon} />
-                            </Button> */}
-                        </label>
+                                </Button>
+                            </label>
                         </form>
                         <br></br>
                         <br></br>

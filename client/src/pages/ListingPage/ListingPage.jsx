@@ -23,8 +23,15 @@ import Navbar from '../../components/Navbar';
 import SimpleModal from '../../components/SimpleModal';
 import axios from 'axios';
 // import { CardHeader, Avatar } from '@material-ui/core';
+import BackgroundImage from '../images/alex.jpg';
 
 const styles = theme => ({
+    pageWrapper: {
+        backgroundImage: `url(${BackgroundImage})`,
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover'
+    },
     appBar: {
         position: 'relative',
     },
@@ -129,10 +136,10 @@ class ListingPage extends React.Component {
         const { classes } = this.props;
 
         return (
-            <div>
+            <div className={classes.pageWrapper}>
                 <Navbar {...this.props} />
                 Listing Page
-                    <div className={classNames(classes.layout, classes.cardGrid)}>
+                <div className={classNames(classes.layout, classes.cardGrid)}>
                     <Grid container spacing={40}>
                         {this.state.listings.map((listing, index) => {
                             return <Grid item key={index} sm={6} md={5} lg={4}>
@@ -161,7 +168,7 @@ class ListingPage extends React.Component {
                                         <Typography gutterBottom variant="h5" component="h2">
                                             Price: {listing.price}
                                         </Typography>
-                                        <Typography style = {{wordWrap: 'break-word'}} variant="body2">
+                                        <Typography style={{ wordWrap: 'break-word' }} variant="body2">
                                             {listing.short_description}
                                         </Typography>
                                     </CardContent>
@@ -169,7 +176,7 @@ class ListingPage extends React.Component {
                                         <IconButton aria-label="Add to favorites">
                                             <FavoriteIcon />
                                         </IconButton>
-                                        <SimpleModal listing = {listing} ref={this.simpleModalRef}></SimpleModal>
+                                        <SimpleModal listing={listing} ref={this.simpleModalRef}></SimpleModal>
                                         <Button size="small" color="primary">Edit </Button>
                                         <Button onClick={() => this.handleRemoveClick(index)} size="small" color="primary">
                                             Delete
@@ -189,16 +196,16 @@ class ListingPage extends React.Component {
                                         <CardContent>
                                             <Typography paragraph>Method:</Typography>
                                             <Typography paragraph>
-                                                
+
                                             </Typography>
                                             <Typography paragraph>
 
                                             </Typography>
                                             <Typography paragraph>
-                                                
+
                                             </Typography>
                                             <Typography>
-                                               
+
                                             </Typography>
                                         </CardContent>
                                     </Collapse>

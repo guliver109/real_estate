@@ -1,4 +1,7 @@
 const styles = theme => ({
+    root: {
+        flexGrow: 1,
+      },
     appBar: {
         position: 'relative',
     },
@@ -35,6 +38,11 @@ const styles = theme => ({
     formControl: {
         margin: theme.spacing.unit,
     },
-
+    fab: {
+        margin: theme.spacing.unit * 1
+    },
+    extendedIcon: {
+        marginRight: theme.spacing.unit * 1
+    },
 });
 export default styles;

@@ -5,17 +5,19 @@ import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
+// import InputBase from '@material-ui/core/InputBase';
+// import Badge from '@material-ui/core/Badge';
+import Avatar from '@material-ui/core/Avatar';
+import AssignmentIcon from '@material-ui/icons/Assignment';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
+// import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+// import MailIcon from '@material-ui/icons/Mail';
+// import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import axios from 'axios';
 
@@ -161,20 +163,26 @@ class PrimarySearchAppBar extends React.Component {
             >
                 <MenuItem onClick={this.handleMobileMenuClose}>
                     <IconButton color="inherit">
-                        <Badge badgeContent={4} color="secondary">
+                        {/* <Badge badgeContent={4} color="secondary">
                             <MailIcon />
-                        </Badge>
+                        </Badge> */}
+                        <Avatar className={classes.greenAvatar}>
+                            <AssignmentIcon />
+                        </Avatar>
                     </IconButton>
-                    <p>Messages</p>
+                        <Button color="inherit" href="/create">
+                            Add New Listing
+                        </Button>
+                    {/* <p>Create Listing</p> */}
                 </MenuItem>
-                <MenuItem onClick={this.handleMobileMenuClose}>
+                {/* <MenuItem onClick={this.handleMobileMenuClose}>
                     <IconButton color="inherit">
                         <Badge badgeContent={11} color="secondary">
                             <NotificationsIcon />
                         </Badge>
                     </IconButton>
                     <p>Notifications</p>
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem onClick={this.handleProfileMenuOpen}>
                     <IconButton color="inherit">
                         <AccountCircle />
@@ -195,7 +203,7 @@ class PrimarySearchAppBar extends React.Component {
                             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
                                 Hello {this.props.user.userName}
                             </Typography>
-                            <div className={classes.search}>
+                            {/* <div className={classes.search}>
                                 <div className={classes.searchIcon}>
                                     <SearchIcon />
                                 </div>
@@ -206,10 +214,10 @@ class PrimarySearchAppBar extends React.Component {
                                         input: classes.inputInput,
                                     }}
                                 />
-                            </div>
+                            </div> */}
                             <div className={classes.grow} />
                             <div className={classes.sectionDesktop}>
-                                <IconButton color="inherit">
+                                {/* <IconButton color="inherit">
                                     <Badge badgeContent={4} color="secondary">
                                         <MailIcon />
                                     </Badge>
@@ -218,7 +226,12 @@ class PrimarySearchAppBar extends React.Component {
                                     <Badge badgeContent={17} color="secondary">
                                         <NotificationsIcon />
                                     </Badge>
-                                </IconButton>
+                                </IconButton> */}
+                                <Typography>
+                                    <Button href="/create">
+                                       Add New Listing
+                                    </Button>
+                                </Typography>
                                 <IconButton
                                     aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                                     aria-haspopup="true"
@@ -241,9 +254,9 @@ class PrimarySearchAppBar extends React.Component {
                 <div className={classes.root}>
                     <AppBar position="static">
                         <Toolbar>
-                            <Button onClick = {() => this.routeTo('/login')} color="inherit">Login</Button>
-                            <Button onClick = {() => this.routeTo('/')} color="inherit">Sign Up</Button>
-                            <Button onClick = {() => this.routeTo('/listings')} color="inherit">Listings</Button>
+                            <Button onClick={() => this.routeTo('/login')} color="inherit">Login</Button>
+                            <Button onClick={() => this.routeTo('/')} color="inherit">Sign Up</Button>
+                            <Button onClick={() => this.routeTo('/listings')} color="inherit">Listings</Button>
                         </Toolbar>
                     </AppBar>
                     {renderMenu}
