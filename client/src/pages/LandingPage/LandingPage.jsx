@@ -64,7 +64,7 @@ const styles = theme => ({
     },
     mainFeaturedPostContent: {
         padding: theme.spacing.unit * 6,
-        marginTop: theme.spacing.unit * 20,
+        marginTop: theme.spacing.unit * 15,
         // marginLeft: 'auto',
         // marginRight: 'auto'
         // [theme.breakpoints.up('md')]: {
@@ -74,7 +74,6 @@ const styles = theme => ({
     inputBox: {
         margin: '0 auto'
     },
-
     mainGrid: {
         marginTop: theme.spacing.unit * 3,
     },

@@ -27,7 +27,6 @@ const   {Schema, model} = require('mongoose'),
                 next();
             })
         })
-        
     })
 
     userSchema.methods.comparePassword = (userPassword, cb) => {

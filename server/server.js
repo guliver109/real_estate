@@ -1,13 +1,10 @@
 const   express = require('express'),
         cookieParser = require('cookie-parser'),
-        // bodyParser = express('bodyParser'),
-        // methodOverride = require('method-override'),
-        path = require('path'),
         app = express(),
+        path = require('path'),
         PORT = process.env.PORT || 3001,
         userRoutes = require('./routes/user'),
         listingRoutes = require('./routes/listing');
-        // picturesRoutes = require('./routes/pictures');
 
 
 require('./config/connection'); // connection to data base
@@ -23,16 +20,18 @@ app.use(cookieParser());
 app.get('/favicon.ico', (req, res, next) => {
     next();
 })
+
 require('./config/session')(app);
 app.use('/uploads', express.static(path.join(__dirname + '/uploads')));
+
 app.use(express.static(path.join(__dirname, '../client/build')));
 
 app.use(userRoutes);
 app.use('/listings', listingRoutes); // prepending '/listing' to every listing routes
 // app.use('/pictures', picturesRoutes);
+
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname + './../client/build/index.html'))
 })
-
 
 app.listen(PORT);

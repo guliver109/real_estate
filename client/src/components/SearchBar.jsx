@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-// import { styles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
@@ -12,7 +11,7 @@ import DirectionsIcon from '@material-ui/icons/Directions';
 
 const styles = theme => ({
     root: {
-       
+
             marginLeft  : 'auto',
             marginRight : 'auto',
         padding: '2px 4px',
